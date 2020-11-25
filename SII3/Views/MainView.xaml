@@ -1,0 +1,169 @@
+﻿<Window x:Class="SII3.Views.MainView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SII3.ViewModels"
+        mc:Ignorable="d"
+        Title="MainView" Height="650" Width="1000">
+    <Window.DataContext>
+        <local:ApplicationViewModel/>
+    </Window.DataContext>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.5*"/>
+            <ColumnDefinition Width="0.5*"/>
+            <ColumnDefinition Width="0.5*"/>
+        </Grid.ColumnDefinitions>
+        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.1*"/>
+            <RowDefinition/>
+            <RowDefinition Height="0.1*"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Orientation="Horizontal">
+            <Label 
+                Grid.Row="0"
+                Grid.Column="0"
+                Content="Текущий пользователь:"
+                FontSize="16"/>
+            <TextBox
+                x:Name="CurrentUserName"
+                Width="139" Height="25"
+                FontSize="16"
+                IsEnabled="False"
+                Text="{Binding CurrentUserName, UpdateSourceTrigger=PropertyChanged}"/>
+        </StackPanel>
+        <TreeView 
+            x:Name="TreeView"
+            Margin="7"
+            Grid.Row="1"
+            Grid.RowSpan="1"
+            ItemsSource="{Binding MemoryTreeViewItems, UpdateSourceTrigger=PropertyChanged}"/>
+
+        <Label 
+            Grid.Row="2"
+            Grid.Column="2"
+            Content="Список пользователей:"
+            FontSize="16"/>
+        <ListView 
+            x:Name="Users"
+            Grid.Row="3"
+            Grid.Column="2"
+            Margin="7"
+            ItemsSource="{Binding UserItems, UpdateSourceTrigger=PropertyChanged}">
+        </ListView>
+
+        <Label 
+            Grid.Row="0"
+            Grid.Column="1"
+            Content="Сохраненные:"
+            FontSize="16"/>
+        <ListView 
+            x:Name="Favourite"
+            Grid.Row="1"
+            Grid.Column="1"
+            Margin="7"
+            ItemsSource="{Binding FavouriteItems, UpdateSourceTrigger=PropertyChanged}"/>
+
+        <Label 
+            Grid.Row="2"
+            Grid.Column="1"
+            Content="Больше не предлагать:"
+            FontSize="16"/>
+        <ListView 
+            x:Name="NotShow"
+            Grid.Row="3"
+            Grid.Column="1"
+            Margin="7"
+            ItemsSource="{Binding NotShowItems, UpdateSourceTrigger=PropertyChanged}"/>
+
+        <Label 
+            Grid.Row="0"
+            Grid.Column="2"
+            Content="Рекомендации:"
+            FontSize="16"/>
+        <ListView 
+            x:Name="Recomendations"
+            Grid.Row="1"
+            Grid.Column="2"
+            Margin="7"
+            ItemsSource="{Binding RecommendationsItems, UpdateSourceTrigger=PropertyChanged}"/>
+
+        <StackPanel Orientation="Vertical" Grid.Column="0" Grid.Row="2" Grid.RowSpan="2" Margin="7">
+            <Label 
+                Grid.Row="0"
+                Grid.Column="0"
+                Content="Путь к файлу:"
+                FontSize="16"/>
+            <StackPanel Orientation="Horizontal">
+                <TextBox 
+                    x:Name="TreePath"
+                    FontSize="16"
+                    Width="278"
+                    Text="{Binding Filename, UpdateSourceTrigger=PropertyChanged}"/>
+                <Button 
+                    x:Name="OpenFileDialogButton"
+                    FontSize="16"
+                    Width="28"
+                    Margin="8,0,0,0"
+                    Command="{Binding OpenFileDialogCommand}">
+                    <Image Source="..\Resources\images.png"/>
+                </Button>
+            </StackPanel>
+
+            <Button 
+                x:Name="LoadTreeButton"
+                Margin="0,10,0,0"
+                Content="Загрузить дерево"
+                FontSize="16"
+                Command="{Binding LoadTreeCommand}"/>
+
+            <Label
+                Grid.Row="0"
+                Grid.Column="0"
+                Margin="0,10,0,0"
+                Content="Имя пользователя:"
+                FontSize="16"/>
+            <TextBox
+                x:Name="UserName"
+                FontSize="16"
+                Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged}"/>
+            <Button
+                x:Name="AddUserButton"
+                Margin="0,7,0,0"
+                Content="Добавить пользователя"
+                FontSize="16"
+                Command="{Binding AddUserCommand}"
+                CommandParameter="{Binding UserName}"/>
+            <Button
+                x:Name="ChangeUserButton"
+                Margin="0,7,0,0"
+                Content="Сменить пользователя"
+                FontSize="16"
+                Command="{Binding ChangeUserCommand}"
+                CommandParameter="{Binding UserName}"/>
+            <Button
+                x:Name="GenerateRecommendationsButton"
+                Margin="0,7,0,0"
+                Content="Сгенерировать рекомендации"
+                FontSize="16"
+                Command="{Binding GenerateRecommendationsCommand}"/>
+            <StackPanel Orientation="Horizontal" Margin="0,7,0,0">
+                <Label
+                    Content="Число пользователей:"
+                    FontSize="16"/>
+                <TextBox 
+                    Name="NumberTextBox"
+                    Width ="50" 
+                    Height="25"
+                    FontSize="16"
+                    PreviewTextInput="NumberValidationTextBox"
+                    Text="{Binding UsersCount, UpdateSourceTrigger=PropertyChanged}"/>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Window>
